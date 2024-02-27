@@ -3,17 +3,17 @@
 namespace Gregurco\Bundle\GuzzleBundleOAuth2Plugin\Middleware;
 
 use GuzzleHttp\ClientInterface;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use Sainsburys\Guzzle\Oauth2\AccessToken;
 use Sainsburys\Guzzle\Oauth2\GrantType\GrantTypeInterface;
 use Sainsburys\Guzzle\Oauth2\GrantType\RefreshTokenGrantTypeInterface;
 use Sainsburys\Guzzle\Oauth2\Middleware\OAuthMiddleware;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 class CachedOAuthMiddleware extends OAuthMiddleware
 {
     /**
-     * @var AdapterInterface cacheClient
+     * @var CacheItemPoolInterface cacheClient
      */
     private $cacheClient;
 
@@ -28,14 +28,14 @@ class CachedOAuthMiddleware extends OAuthMiddleware
      * @param ClientInterface $client
      * @param GrantTypeInterface|null $grantType
      * @param RefreshTokenGrantTypeInterface|null $refreshTokenGrantType
-     * @param AdapterInterface $cacheClient
+     * @param CacheItemPoolInterface $cacheClient
      * @param string $clientName
      */
     public function __construct(
         ClientInterface $client,
         GrantTypeInterface $grantType = null,
         RefreshTokenGrantTypeInterface $refreshTokenGrantType = null,
-        AdapterInterface $cacheClient,
+        CacheItemPoolInterface $cacheClient,
         string $clientName
     ) {
         parent::__construct($client, $grantType, $refreshTokenGrantType);

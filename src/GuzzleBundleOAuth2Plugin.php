@@ -5,6 +5,7 @@ namespace Gregurco\Bundle\GuzzleBundleOAuth2Plugin;
 
 use EightPoints\Bundle\GuzzleBundle\PluginInterface;
 use Gregurco\Bundle\GuzzleBundleOAuth2Plugin\DependencyInjection\GuzzleBundleOAuth2Extension;
+use Psr\Cache\CacheItemPoolInterface;
 use Sainsburys\Guzzle\Oauth2\GrantType\ClientCredentials;
 use Sainsburys\Guzzle\Oauth2\GrantType\GrantTypeBase;
 use Sainsburys\Guzzle\Oauth2\GrantType\GrantTypeInterface;
@@ -98,7 +99,7 @@ class GuzzleBundleOAuth2Plugin extends Bundle implements PluginInterface
                             new Reference($oauthClientDefinitionName),
                             new Reference($passwordCredentialsDefinitionName),
                             new Reference($refreshTokenDefinitionName),
-                            new Reference(AdapterInterface::class),
+                            new Reference(CacheItemPoolInterface::class),
                             $clientName
                         ]
                     );
