@@ -53,6 +53,7 @@ class GuzzleBundleOAuth2Plugin extends Bundle implements PluginInterface
                 JwtBearer::CONFIG_PRIVATE_KEY => null,
                 'scope' => $config['scope'],
                 'audience' => $config['audience'],
+                'use_app_cache' => $config['use_app_cache'],
             ];
 
             if ($config['private_key']) {
@@ -92,7 +93,7 @@ class GuzzleBundleOAuth2Plugin extends Bundle implements PluginInterface
             //Define middleware
             $oAuth2MiddlewareDefinitionName = sprintf('guzzle_bundle_oauth2_plugin.middleware.%s', $clientName);
             if ($config['persistent']) {
-                if ($config['grant_type'] === ClientCredentials::class) {
+                if ($config['grant_type'] === ClientCredentials::class || $config['use_app_cache'] ) {
                     $oAuth2MiddlewareDefinition = new Definition('%guzzle_bundle_oauth2_plugin.cached_middleware.class%');
                     $oAuth2MiddlewareDefinition->setArguments(
                         [
@@ -202,6 +203,7 @@ class GuzzleBundleOAuth2Plugin extends Bundle implements PluginInterface
                     ->end()
                 ->end()
                 ->booleanNode('persistent')->defaultFalse()->end()
+                ->booleanNode('use_app_cache')->defaultFalse()->end()
                 ->booleanNode('retry_limit')->defaultValue(5)->end()
             ->end();
     }
