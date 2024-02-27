@@ -110,7 +110,7 @@ class GuzzleBundleOAuth2Plugin extends Bundle implements PluginInterface
                             new Reference($oauthClientDefinitionName),
                             new Reference($passwordCredentialsDefinitionName),
                             new Reference($refreshTokenDefinitionName),
-                            new Reference('session'),
+                            new Reference('request_stack'),
                             $clientName
                         ]
                     );

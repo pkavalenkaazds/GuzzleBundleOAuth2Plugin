@@ -7,6 +7,7 @@ use Sainsburys\Guzzle\Oauth2\GrantType\GrantTypeInterface;
 use Sainsburys\Guzzle\Oauth2\GrantType\RefreshTokenGrantTypeInterface;
 use GuzzleHttp\ClientInterface;
 use Sainsburys\Guzzle\Oauth2\Middleware\OAuthMiddleware;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class PersistentOAuthMiddleware extends OAuthMiddleware
@@ -30,12 +31,12 @@ class PersistentOAuthMiddleware extends OAuthMiddleware
         ClientInterface $client,
         GrantTypeInterface $grantType = null,
         RefreshTokenGrantTypeInterface $refreshTokenGrantType = null,
-        SessionInterface $session,
+        RequestStack $requestStack,
         string $clientName
     ) {
         parent::__construct($client, $grantType, $refreshTokenGrantType);
 
-        $this->session = $session;
+        $this->session = $requestStack->getSession();
         $this->clientName = $clientName;
     }
 
